@@ -1,0 +1,108 @@
+/* CSS for PathWayBanner */
+.container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60vh;
+    width: 100%;
+    background: #000008;
+    background: linear-gradient(217deg, rgba(0, 0, 8, 1) 92%, rgba(216, 232, 232, 1) 100%);
+}
+
+.left-container{
+    height: 60vh;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 5%;
+}
+
+.right-container{
+    height: 60vh;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner-img{
+    height: 45vh;
+    width: 60%;
+}
+
+.banner-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+.sub-title{
+    background: #D81D85;
+    background: linear-gradient(77deg, rgba(216, 29, 133, 1) 46%, rgba(218, 131, 86, 1) 67%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.main-title{
+    color: #fff;
+}
+
+.description{
+    color: #fff;
+}
+
+.logo-container {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+    align-items: center;
+}
+
+.logo-container img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+}
+
+.explore-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px 10px 20px;
+    background: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a2332;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .explore-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .explore-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon {
+    width: 100%;
+    height: 100%;
+  }

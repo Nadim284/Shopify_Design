@@ -1,0 +1,254 @@
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#efefef"
+    },
+    {
+      "type": "header",
+      "content": "Contact Info"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone Number",
+      "default": "01623 000000"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email Address",
+      "default": "info@artify.com"
+    },
+    {
+      "type": "header",
+      "content": "Announcement"
+    },
+    {
+      "type": "text",
+      "id": "announcement",
+      "label": "Announcement Text",
+      "default": "15% OFF YOUR FIRST ORDER"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Bar"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+  .announcement-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 44px;
+      width: 100%;
+      background-color: {{ section.settings.bg_color }};
+      color: {{ section.settings.text_color }};
+      padding: 5px 4%;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-family: 'Outfit', sans-serif;
+  }
+
+  /* Side Sections */
+  .announcement-bar .contact-info, 
+  .announcement-bar .top-settings {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      width: 33%;
+  }
+
+  .announcement-bar .top-settings {
+      justify-content: flex-end;
+  }
+
+  .announcement-bar .contact-info div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+  }
+
+  .announcement-bar .contact-info div:hover {
+      opacity: 0.8;
+  }
+
+  .announcement-bar .contact-info svg {
+      height: 14px;
+      width: auto;
+      fill: currentColor;
+  }
+
+  /* Centered Offer */
+  .announcement-bar .offer {
+      width: 33%;
+      text-align: center;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+  }
+
+  /* Dropdown styling */
+  .announcement-bar .dropdown {
+      position: relative;
+      display: inline-block;
+  }
+
+  .announcement-bar .dropdown-btn {
+      background: transparent;
+      color: currentColor;
+      border: none;
+      outline: none;
+      padding: 5px 10px;
+      font-size: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s;
+      font-family: inherit;
+  }
+
+  .announcement-bar .dropdown-btn:hover {
+      background: rgba(255,255,255,0.1);
+  }
+
+  .announcement-bar .arrow-down {
+      width: 0; 
+      height: 0; 
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid currentColor;
+      opacity: 0.7;
+  }
+
+  .announcement-bar .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #1a1a1a;
+      min-width: 80px;
+      z-index: 100;
+      top: 100%;
+      right: 0;
+      margin-top: 5px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  }
+
+  .announcement-bar .dropdown-content a {
+      color: white;
+      padding: 8px 12px;
+      text-decoration: none;
+      display: block;
+      font-size: 10px;
+      text-align: left;
+  }
+
+  .announcement-bar .dropdown-content a:hover {
+      background-color: #333;
+  }
+
+  .announcement-bar .dropdown:hover .dropdown-content {
+      display: block;
+  }
+
+  .announcement-bar .cancel {
+      font-size: 14px;
+      font-weight: 300;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: all 0.3s ease;
+      padding: 5px;
+  }
+
+  .announcement-bar .cancel:hover {
+      opacity: 1;
+      transform: rotate(90deg);
+  }
+
+  /* Responsive fix */
+  @media (max-width: 900px) {
+      .announcement-bar .contact-info {
+          display: none;
+      }
+      .announcement-bar .offer {
+          width: 60%;
+      }
+      .announcement-bar .top-settings {
+          width: 40%;
+      }
+  }
+</style>
+
+<div class="announcement-bar" id="AnnouncementBar-{{ section.id }}">
+  <div class="contact-info">
+    {% if section.settings.phone != blank %}
+      <div class="cell-number">
+        <svg viewBox="0 0 24 24"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>
+        {{ section.settings.phone }}
+      </div>
+    {% endif %}
+    {% if section.settings.email != blank %}
+      <div class="email">
+        <svg viewBox="0 0 24 24"><path d="M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.11,4 20,4M20,18H4V8L12,13L20,8V18M20,6L12,11L4,6V6H20V6Z"/></svg>
+        {{ section.settings.email }}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="offer">
+    {{ section.settings.announcement }}
+  </div>
+
+  <div class="top-settings">
+    <div class="dropdown">
+      <button class="dropdown-btn">
+        BDT
+        <span class="arrow-down"></span>
+      </button>
+      <div class="dropdown-content">
+        <a href="#">USD</a>
+        <a href="#">EUR</a>
+        <a href="#">GBP</a>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button class="dropdown-btn">
+        English
+        <span class="arrow-down"></span>
+      </button>
+      <div class="dropdown-content">
+        <a href="#">BANGLA</a>
+        <a href="#">FR</a>
+        <a href="#">ES</a>
+      </div>
+    </div>
+
+    <div class="cancel" onclick="this.closest('.announcement-bar').style.display='none'">X</div>
+  </div>
+</div>

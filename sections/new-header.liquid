@@ -1,0 +1,320 @@
+{% schema %}
+    {
+        "name": "New Header",
+        "class": "top-new-header",
+        "settings": [
+            {
+                "id": "logo",
+                "type": "image_picker",
+                "label": "Logo image"
+            },
+            {
+                "id": "text",
+                "type": "text",
+                "label": "Text"
+            },
+            {
+                "id": "color",
+                "type": "color",
+                "label": "Text Color",
+                "default": "#edf0f1"
+            },
+            {
+                "id": "header_bg",
+                "type": "color",
+                "label": "Background Color",
+                "default": "#24252A"
+            }
+        ],
+        "blocks": [
+            {   
+                "name": "header menu",
+                "type": "menu",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "name",
+                        "label": "Menu name"
+                    },
+                    {
+                        "type": "url",
+                        "id": "linkurl",
+                        "label": "link url"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}
+
+
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  li, a, button {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: {{ section.settings.color }};
+    text-decoration: none;
+  }
+
+  .site-header {
+    background-color: {{ section.settings.header_bg }};
+    height: 80px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+  }
+
+  .header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .logo {
+    cursor: pointer;
+    height: 50px;
+    width: auto;
+  }
+
+  .logo-text {
+    font-size: 24px;
+    color: {{ section.settings.color }};
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .nav_links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav_links li {
+    padding: 0px 20px;
+  }
+
+  .nav_links li a {
+    transition: all 0.3s ease 0s;
+  }
+
+  .nav_links li a:hover {
+    color: #a90063;
+  }
+
+  .cta-btn {
+    padding: 9px 25px;
+    border: none;
+    border-radius: 45px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    background: linear-gradient(90deg, rgba(227, 21, 130, 1) 0%, rgba(248, 112, 66, 1) 84%);
+    color: white;
+  }
+
+  .cta-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(90deg, rgba(248, 112, 66, 1) 0%, rgba(227, 21, 130, 1) 84%);
+  }
+
+  /* Hamburger Menu */
+  .hamburger {
+    display: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 10px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: {{ section.settings.color }};
+    margin: 5px 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  /* Responsive Design */
+  @media screen and (max-width: 991px) {
+    .header-wrapper {
+        padding: 0 4%;
+    }
+    
+    .nav_links {
+        display: none; /* Hide desktop nav */
+    }
+
+    .cta-wrapper {
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    /* Mobile Menu Active State */
+    .mobile-nav-active .mobile-menu {
+        transform: translateX(0);
+    }
+
+    .mobile-nav-active .hamburger span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-nav-active .hamburger span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .mobile-nav-active .hamburger span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+
+  /* Mobile Menu Drawer */
+  .mobile-menu {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    bottom: 0;
+    width: 80%;
+    max-width: 300px;
+    background-color: {{ section.settings.header_bg }};
+    z-index: 999;
+    transform: translateX(100%);
+    transition: transform 0.4s ease-in-out;
+    padding: 40px 20px;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .mobile-nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .mobile-nav-links li a {
+    font-size: 20px;
+    display: block;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .mobile-cta {
+    margin-top: auto;
+    width: 100%;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    z-index: 998;
+  }
+
+  .mobile-nav-active .overlay {
+    display: block;
+  }
+</style>
+
+<header class="site-header">
+  <div class="header-wrapper">
+
+    <!-- Logo -->
+    <div class="logo-wrapper">
+      <a href="{{ routes.root_url }}">
+        {% if section.settings.logo != blank %}
+          <img 
+            src="{{ section.settings.logo | img_url: 'master' }}" 
+            alt="{{ section.settings.logo.alt | default: shop.name }}" 
+            class="logo"
+          >
+        {% elsif section.settings.text != blank %}
+          <h1 class="logo-text">{{ section.settings.text }}</h1>
+        {% else %}
+          <h1 class="logo-text">{{ shop.name }}</h1>
+        {% endif %}
+      </a>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <nav class="main-nav">
+      <ul class="nav_links">
+        {% for block in section.blocks %}
+          <li><a href="{{ block.settings.linkurl }}">{{ block.settings.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+
+    <!-- Desktop CTA -->
+    <div class="cta-wrapper">
+      <a href="/products" class="cta">
+        <button class="cta-btn">Purchase Now</button>
+      </a>
+    </div>
+
+    <!-- Hamburger -->
+    <button class="hamburger" id="mobile-menu-toggle" aria-label="Toggle Navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+  </div>
+</header>
+
+<!-- Mobile Menu Drawer -->
+<div class="overlay" id="menu-overlay"></div>
+<div class="mobile-menu" id="mobile-menu-drawer">
+    <ul class="mobile-nav-links">
+        {% for block in section.blocks %}
+          <li><a href="{{ block.settings.linkurl }}">{{ block.settings.name }}</a></li>
+        {% endfor %}
+    </ul>
+    <div class="mobile-cta">
+        <a href="/products">
+            <button class="cta-btn" style="width: 100%;">Purchase Now</button>
+        </a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggle = document.getElementById('mobile-menu-toggle');
+        const overlay = document.getElementById('menu-overlay');
+        const body = document.body;
+
+        function toggleMenu() {
+            body.classList.toggle('mobile-nav-active');
+        }
+
+        toggle.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking a link
+        const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                body.classList.remove('mobile-nav-active');
+            });
+        });
+    });
+</script>

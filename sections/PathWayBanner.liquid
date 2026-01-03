@@ -1,0 +1,290 @@
+{% schema %}
+{
+  "name": "Pathway Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "bg_color_1",
+      "label": "Background Color Primary",
+      "default": "#000008"
+    },
+    {
+      "type": "color",
+      "id": "bg_color_2",
+      "label": "Background Color Secondary",
+      "default": "#d8e8e8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "sub_title",
+      "label": "Sub Title",
+      "default": "The Next-Generation"
+    },
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "Main Title",
+      "default": "Pathway-Wordpress WooCommerce Theme"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "You can create your website in minutes with the help of countless amazing powerful features of pathway."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Explore Demo"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pathway Banner"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
+
+  .pathway-banner-section * {
+      font-family: 'Open Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+  }
+
+  .pathway-banner-section .banner-container{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60vh;
+      width: 100%;
+      background: {{ section.settings.bg_color_1 }};
+      background: linear-gradient(217deg, {{ section.settings.bg_color_1 }} 92%, {{ section.settings.bg_color_2 }} 100%);
+  }
+
+  .pathway-banner-section .left-container{
+      height: 60vh;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding-left: 5%;
+  }
+
+  .pathway-banner-section .right-container{
+      height: 60vh;
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .pathway-banner-section .banner-img{
+      height: 45vh;
+      width: 60%;
+  }
+
+  .pathway-banner-section .banner-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+  }
+
+
+  .pathway-banner-section .sub-title{
+      background: #D81D85;
+      background: linear-gradient(77deg, rgba(216, 29, 133, 1) 46%, rgba(218, 131, 86, 1) 67%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+  }
+
+  .pathway-banner-section .main-title h1{
+      color: {{ section.settings.text_color }};
+      font-size: 3em; 
+      line-height: 1.2em;
+  }
+
+  .pathway-banner-section .description p{
+      color: {{ section.settings.text_color }};
+      font-size: 1.1em;
+      margin-top: 10px;
+  }
+
+  .pathway-banner-section .logo-container {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+      align-items: center;
+  }
+
+  .pathway-banner-section .logo-container img {
+      height: 60px;
+      width: auto;
+      object-fit: contain;
+  }
+
+  .pathway-banner-section .explore-button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px 10px 20px;
+      background: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a2332;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .pathway-banner-section .explore-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .pathway-banner-section .explore-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .pathway-banner-section .icon-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+    }
+
+    .pathway-banner-section .icon {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Mobile Responsiveness */
+    @media screen and (max-width: 991px) {
+      .pathway-banner-section .banner-container {
+        flex-direction: column;
+        height: auto;
+        padding: 60px 0;
+      }
+
+      .pathway-banner-section .left-container,
+      .pathway-banner-section .right-container {
+        width: 100%;
+        height: auto;
+        padding: 0 5%;
+        align-items: center;
+        text-align: center;
+      }
+
+      .pathway-banner-section .left-container {
+        margin-bottom: 40px;
+      }
+
+      .pathway-banner-section .main-title h1 {
+        font-size: 2.2em;
+        margin: 15px 0;
+      }
+
+      .pathway-banner-section .description p {
+        font-size: 1em;
+      }
+
+      .pathway-banner-section .logo-container {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .pathway-banner-section .logo-container img {
+        height: 45px;
+      }
+
+      .pathway-banner-section .banner-img {
+        width: 80%;
+        height: auto;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .pathway-banner-section .main-title h1 {
+        font-size: 1.8em;
+      }
+      
+      .pathway-banner-section .banner-img {
+        width: 100%;
+      }
+    }
+</style>
+
+<div class="pathway-banner-section">
+  <div class="banner-container">
+        <div class="left-container">
+          <div class="sub-title"><h4>{{ section.settings.sub_title }}</h4></div>
+          <div class="main-title">
+            <h1>{{ section.settings.main_title }}</h1>
+          </div>
+          <div class="description">
+            <p>
+              {{ section.settings.description }}
+            </p>
+          </div>
+          <div class="logo-container">
+            <div class="img1">
+              <img src="{{ 'WooCommerence.png' | asset_url }}" alt="WooCommerce" />
+            </div>
+            <div class="img2">
+              <img src="{{ 'elementor.png' | asset_url }}" alt="Elementor" />
+            </div>
+            <div class="img3">
+              <img src="{{ 'revolution.png' | asset_url }}" alt="Revolution Slider" />
+            </div>
+          </div>
+          <div class="email-input">
+            <button class="explore-button">
+              {{ section.settings.button_text }}
+              <span class="icon-wrapper">
+                <img src="{{ 'down.png' | asset_url }}" alt="down" class="icon" />
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="right-container">
+          <div class="banner-img">
+            {% if section.settings.banner_image != blank %}
+              <img src="{{ section.settings.banner_image | img_url: 'master' }}" alt="{{ section.settings.banner_image.alt }}" width="100%" height="auto">
+            {% else %}
+              <img src="{{ 'pathway_banner.png' | asset_url }}" alt="Banner" width="100%" height="auto">
+            {% endif %}
+          </div>
+        </div>
+  </div>
+</div>

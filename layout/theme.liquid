@@ -31,7 +31,7 @@
   {%- endif -%}
 
   {% include 'social-meta-tags' %}
-  {% include 'style-tags', layout: 'theme' %}
+  {% comment %} {% include 'style-tags', layout: 'theme' %} {% endcomment %}
   {% include 'css-variables' %}
 
   <script>
@@ -47,7 +47,7 @@
     };
   </script>
 
-  {% include 'script-tags', layout: 'theme' %}
+  {% comment %} {% include 'script-tags', layout: 'theme' %} {% endcomment %}
 
   {{ content_for_header }}
 </head>
@@ -56,7 +56,8 @@
 
   <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
 
-  {% section 'header' %}
+  {% section 'announcement' %}
+  {% section 'new-header' %}
 
   <main role="main" id="MainContent">
     {{ content_for_layout }}
