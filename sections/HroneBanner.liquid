@@ -1,0 +1,436 @@
+{% schema %}
+{
+  "name": "Hrone Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay Speed",
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Images"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_left",
+          "label": "Left Banner Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_right",
+          "label": "Right Banner Image"
+        },
+        {
+          "type": "header",
+          "content": "Buttons"
+        },
+        {
+          "type": "text",
+          "id": "explore_text",
+          "label": "Explore Button Text",
+          "default": "Explore"
+        },
+        {
+          "type": "url",
+          "id": "explore_link",
+          "label": "Explore Button Link"
+        },
+        {
+          "type": "text",
+          "id": "shop_text",
+          "label": "Shop Button Text",
+          "default": "Shop now"
+        },
+        {
+          "type": "url",
+          "id": "shop_link",
+          "label": "Shop Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hrone Banner",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% style %}
+  .banner {
+    min-height: 88vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2vh 2vw;
+  }
+
+  .banner .images {
+    height: 100%;
+    width: 100%;
+    max-width: 96vw;
+    border-radius: 30px;
+    display: flex;
+    gap: 10px;
+    position: relative;
+  }
+
+  /* Container setup for stacking slides */
+  .left-banner,
+  .right-banner {
+    position: relative;
+    background-color: #0F1429;
+    border-radius: 30px;
+    border: 8px solid #fff;
+    overflow: hidden;
+    height: 85vh; /* Fixed height to ensure stacking works */
+  }
+
+  .left-banner {
+    flex: 65;
+  }
+
+  .right-banner {
+    flex: 35;
+  }
+
+  /* Individual Slide Logic */
+  .slide-left,
+  .slide-right {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    pointer-events: none; /* Let clicks pass through inactive slides */
+    z-index: 1;
+  }
+
+  .slide-left.active,
+  .slide-right.active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 2;
+  }
+
+  .slide-left img,
+  .slide-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Navigation Arrows - Specific z-index to stay on top */
+  .left-arrow,
+  .right-arrow {
+    height: 50px;
+    width: 50px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+    color: #000;
+  }/* Above images */
+
+  .left-arrow {
+    left: 20px;
+  }
+
+  .right-arrow {
+    right: 20px;
+  }
+
+  .left-arrow:hover,
+  .right-arrow:hover {
+    background-color: #fff;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  /* Buttons */
+  .explore-btn,
+  .shop-btn {
+    height: 50px;
+    min-width: 120px;
+    padding: 0 30px;
+    border-radius: 30px;
+    position: absolute;
+    bottom: 8%;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid transparent;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s; /* Delay for entrance */
+  }
+
+  .slide-right.active .explore-btn,
+  .slide-right.active .shop-btn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .explore-btn {
+    left: 30%;
+    background-color: #fff;
+    color: #0F1429;
+    border-color: #fff;
+  }
+
+  .shop-btn {
+    left: 50%;
+    background: linear-gradient(88deg, rgba(10, 22, 46, 1) 40%, rgba(8, 15, 34, 1) 73%);
+    color: #fff;
+    border-color: #fff;
+  }
+
+  .explore-btn:hover {
+    background-color: #0F1429;
+    color: #fff;
+  }
+
+  .shop-btn:hover {
+    background: #fff;
+    color: #0F1429;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .explore-btn,
+    .shop-btn {
+      left: 5%;
+      font-size: 0.875rem;
+      min-width: 100px;
+      height: 45px;
+    }
+    
+    .shop-btn {
+      left: auto;
+      right: 5%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .banner .images {
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .left-banner,
+    .right-banner {
+      width: 100%;
+      min-height: 300px;
+      flex: none; /* Reset flex */
+    }
+    
+    .explore-btn {
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .shop-btn {
+      bottom: 5%;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      margin-top: 60px;
+    }
+  }
+{% endstyle %}
+
+<!-- Banner Section -->
+<div class="banner" id="banner-{{ section.id }}" data-autoplay="{{ section.settings.autoplay_speed | times: 1000 }}">
+  <div class="images">
+    
+    <!-- LEFT SIDE SLIDER -->
+    <div class="left-banner">
+      {% for block in section.blocks %}
+        <div class="slide-left {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
+          {% if block.settings.banner_left %}
+            {{ block.settings.banner_left | image_url: width: 1200 | image_tag: loading: 'eager', sizes: '65vw' }}
+          {% else %}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {% endif %}
+        </div>
+      {% endfor %}
+      
+      <!-- Controls (Using separate arrows left/right as per design, but controlling single state) -->
+       <button class="left-arrow" aria-label="Previous slide">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- RIGHT SIDE SLIDER -->
+    <div class="right-banner">
+      {% for block in section.blocks %}
+        <div class="slide-right {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
+          {% if block.settings.banner_right %}
+            {{ block.settings.banner_right | image_url: width: 800 | image_tag: loading: 'eager', sizes: '35vw' }}
+          {% else %}
+             {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+          {% endif %}
+          
+          {% if block.settings.explore_text != blank %}
+            <a href="{{ block.settings.explore_link | default: '#' }}" class="explore-btn">
+              {{ block.settings.explore_text }}
+            </a>
+          {% endif %}
+          
+          {% if block.settings.shop_text != blank %}
+            <a href="{{ block.settings.shop_link | default: '#' }}" class="shop-btn">
+              {{ block.settings.shop_text }}
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <button class="right-arrow" aria-label="Next slide">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <!-- Slider Dots -->
+      <div class="slider-controls">
+        {% for block in section.blocks %}
+          <div class="slider-dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}"></div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.slider-controls {
+  position: absolute;
+  bottom: 8%;
+  left: 10%; 
+  display: flex;
+  gap: 15px;
+  z-index: 20;
+}
+
+.slider-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.slider-dot.active {
+  background: white;
+  transform: scale(1.2);
+}
+</style>
+
+<script>
+(function() {
+  const container = document.getElementById('banner-{{ section.id }}');
+  if (!container) return;
+
+  const leftSlides = container.querySelectorAll('.slide-left');
+  const rightSlides = container.querySelectorAll('.slide-right');
+  const prevBtn = container.querySelector('.left-arrow');
+  const nextBtn = container.querySelector('.right-arrow');
+  const dots = container.querySelectorAll('.slider-dot');
+  
+  let currentIndex = 0;
+  const totalSlides = leftSlides.length;
+  const autoplaySpeed = parseInt(container.getAttribute('data-autoplay')) || 5000;
+  let interval;
+
+  function showSlide(index) {
+    if (index >= totalSlides) index = 0;
+    if (index < 0) index = totalSlides - 1;
+    
+    currentIndex = index;
+
+    // Remove active class
+    leftSlides.forEach(slide => slide.classList.remove('active'));
+    rightSlides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Add active class
+    if (leftSlides[currentIndex]) leftSlides[currentIndex].classList.add('active');
+    if (rightSlides[currentIndex]) rightSlides[currentIndex].classList.add('active');
+    if (dots[currentIndex]) dots[currentIndex].classList.add('active');
+  }
+
+  function nextSlide() {
+    showSlide(currentIndex + 1);
+  }
+
+  function prevSlide() {
+    showSlide(currentIndex - 1);
+  }
+
+  // Event Listeners
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function() {
+      prevSlide();
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function() {
+      nextSlide();
+    });
+  }
+  
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', function() {
+      showSlide(index);
+    });
+  });
+})();
+</script>

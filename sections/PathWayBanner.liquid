@@ -280,9 +280,21 @@
         <div class="right-container">
           <div class="banner-img">
             {% if section.settings.banner_image != blank %}
-              <img src="{{ section.settings.banner_image | img_url: 'master' }}" alt="{{ section.settings.banner_image.alt }}" width="100%" height="auto">
+              <img 
+                src="{{ section.settings.banner_image | image_url: width: 1000 }}" 
+                alt="{{ section.settings.banner_image.alt }}" 
+                width="{{ section.settings.banner_image.width }}" 
+                height="{{ section.settings.banner_image.height }}"
+                loading="lazy"
+              >
             {% else %}
-              <img src="{{ 'pathway_banner.png' | asset_url }}" alt="Banner" width="100%" height="auto">
+              <img 
+                src="{{ 'pathway_banner.png' | asset_url }}" 
+                alt="Banner"
+                width="800"
+                height="600"
+                loading="lazy"
+              >
             {% endif %}
           </div>
         </div>

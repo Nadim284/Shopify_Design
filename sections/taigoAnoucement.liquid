@@ -1,0 +1,43 @@
+<div class="h-[4vh] w-full bg-amber-300 flex justify-around items-center" style="background-color: {{section.settings.bg_color}}">
+    <h1 class="underline font-bold" style="color: {{section.settings.text_color}}">{{section.settings.title_1}}</h1>
+    <h1 class="font-bold" style="color: {{section.settings.text_color}}">{{section.settings.title_2}}</h1>
+    <h1 class="underline font-bold" style="color: {{section.settings.text_color}}">{{section.settings.title_3}}</h1>
+</div>
+
+{% schema %}
+{
+    "name": "Taigo Anoucement",
+    "settings": [
+            {
+                "type": "text",
+                "id": "title_1",
+                "label": "Title 1",
+                "default": "BOTTLES BUY 5 GET 1 FREE"
+            },
+            {
+                "type": "text",
+                "id": "title_2",
+                "label": "Title 2",
+                "default": "FREE SHIPPING TO ORDERS ABOVE $100"
+            },
+            {
+                "type": "text",
+                "id": "title_3",
+                "label": "Title 3",
+                "default": "NOW AVAILABLE IN CANS!"
+            },
+            {
+                "type": "color",
+                "id": "bg_color",
+                "label": "Background Color",
+                "default": "#DE00A5"
+            },
+            {
+                "type": "color",
+                "id": "text_color",
+                "label": "Text Color",
+                "default": "#ffffff"
+            }
+        ]
+}
+{% endschema %}

@@ -1,0 +1,689 @@
+{% schema %}
+{
+  "name": "Marble Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Left Side Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Left Fixed Image"
+    },
+    {
+      "type": "text",
+      "id": "left_subheading",
+      "label": "Subheading",
+      "default": "New Arrivals"
+    },
+    {
+      "type": "text",
+      "id": "left_heading",
+      "label": "Heading",
+      "default": "Dress to Impress"
+    },
+    {
+      "type": "text",
+      "id": "left_btn_text",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "left_btn_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Right Side Content"
+    },
+    {
+      "type": "text",
+      "id": "right_subheading",
+      "label": "Subheading",
+      "default": "Spring 23"
+    },
+    {
+      "type": "text",
+      "id": "right_heading",
+      "label": "Heading",
+      "default": "Pink is The New Black"
+    },
+    {
+      "type": "text",
+      "id": "right_btn_text",
+      "label": "Button Text",
+      "default": "Lookbook"
+    },
+    {
+      "type": "url",
+      "id": "right_btn_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Header Overlay"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo Width",
+      "default": 150
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marble Banner",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% style %}
+  #shopify-section-{{ section.id }} * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  #shopify-section-{{ section.id }} .container {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #shopify-section-{{ section.id }} .banner {
+    height: 100%;
+    width: 100%;
+    position: relative;
+  }
+
+  /* Left side - Fixed image */
+  #shopify-section-{{ section.id }} .slider-container2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .slider-container2 img,
+  #shopify-section-{{ section.id }} .slider-container2 svg {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Right side - Image slider */
+  #shopify-section-{{ section.id }} .slider-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    width: 50%;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .slider-container img,
+  #shopify-section-{{ section.id }} .slider-container svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    background: #f5f5f5; /* Placeholder bg */
+  }
+
+  #shopify-section-{{ section.id }} .slider-container img.active,
+  #shopify-section-{{ section.id }} .slider-container svg.active {
+    opacity: 1;
+  }
+
+  /* Slider controls */
+  #shopify-section-{{ section.id }} .slider-controls {
+    position: absolute;
+    bottom: 80px;
+    right: 25%;
+    transform: translateX(50%);
+    z-index: 3;
+    display: flex;
+    gap: 15px;
+  }
+
+  #shopify-section-{{ section.id }} .slider-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    border: 2px solid white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  #shopify-section-{{ section.id }} .slider-dot.active {
+    background: white;
+    transform: scale(1.2);
+  }
+
+  /* Arrow controls */
+  #shopify-section-{{ section.id }} .slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    transition: all 0.3s ease;
+  }
+
+  #shopify-section-{{ section.id }} .slider-arrow:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  #shopify-section-{{ section.id }} .slider-arrow.prev {
+    left: 55%;
+  }
+
+  #shopify-section-{{ section.id }} .slider-arrow.next {
+    right: 30px;
+  }
+
+  /* Content on top of image */
+  #shopify-section-{{ section.id }} .content {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none; /* Allow clicks through to slider arrows */
+  }
+
+  #shopify-section-{{ section.id }} .content > * {
+      pointer-events: auto; /* Re-enable pointer events for content children */
+  }
+
+  #shopify-section-{{ section.id }} .header {
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .logo {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #shopify-section-{{ section.id }} .logo img {
+    max-width: 100%;
+    width: {{ section.settings.logo_width }}px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Menu Section */
+  #shopify-section-{{ section.id }} .menu {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2vw;
+    padding: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .menu a {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fffdfd;
+    position: relative;
+    transition: color 0.3s ease;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+
+  /* Cart options design */
+  #shopify-section-{{ section.id }} .cart {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  #shopify-section-{{ section.id }} .icon-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 1px 3px rgba(0,0,0,0.3));
+  }
+
+  /* Banner Content */
+  #shopify-section-{{ section.id }} .banner-content {
+    width: 100%;
+    display: flex;
+    padding: 0 50px 50px 50px;
+    flex-grow: 1;
+    align-items: center;
+  }
+
+  /* Left split content */
+  #shopify-section-{{ section.id }} .left-content {
+    width: 50%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    height: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .left-content h1 {
+    font-size: 8vw; /* Responsive font size */
+    max-font-size: 120px;
+    line-height: 0.9;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin: 10px 0;
+  }
+
+  #shopify-section-{{ section.id }} .left-content h6 {
+    font-size: 1.5rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  }
+
+  /* Right split content */
+  #shopify-section-{{ section.id }} .right-content {
+    width: 50%;
+    color: rgb(19, 18, 18);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 20px;
+    padding-left: 5%;
+    height: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .right-content h1 {
+    font-size: 8vw;
+    max-font-size: 120px;
+    line-height: 0.9;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin: 10px 0;
+  }
+
+  #shopify-section-{{ section.id }} .right-content h6 {
+    font-size: 1.5rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  }
+
+  /* Buttons */
+  #shopify-section-{{ section.id }} .action-btn {
+    display: inline-block;
+    min-width: 150px;
+    margin-top: 20px;
+    padding: 15px 30px;
+    border: 1px solid #ccc;
+    background: white;
+    color: black;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  #shopify-section-{{ section.id }} .action-btn:hover {
+    background: black;
+    color: white;
+    border-color: black;
+  }
+
+  /* Responsiveness */
+  @media (min-width: 1440px) {
+     #shopify-section-{{ section.id }} .left-content h1,
+     #shopify-section-{{ section.id }} .right-content h1 {
+         font-size: 120px;
+     }
+  }
+
+  @media (max-width: 1024px) {
+    #shopify-section-{{ section.id }} .left-content h1,
+    #shopify-section-{{ section.id }} .right-content h1 {
+      font-size: 60px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .container {
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    #shopify-section-{{ section.id }} .slider-container2,
+    #shopify-section-{{ section.id }} .slider-container {
+      width: 100%;
+      left: 0;
+      position: absolute;
+    }
+    
+    #shopify-section-{{ section.id }} .slider-container2 {
+       position: fixed; /* Background fixed */
+       z-index: 0;
+    }
+
+    #shopify-section-{{ section.id }} .slider-container {
+      display: none; /* As per original design choice for mobile */
+    }
+
+    #shopify-section-{{ section.id }} .header {
+      flex-direction: column;
+      padding: 10px;
+      gap: 15px;
+    }
+
+    #shopify-section-{{ section.id }} .menu {
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+      order: 2;
+    }
+
+    #shopify-section-{{ section.id }} .menu a {
+      font-size: 14px;
+    }
+
+    #shopify-section-{{ section.id }} .logo {
+      width: 100%;
+      order: 1;
+      margin-bottom: 10px;
+    }
+
+    #shopify-section-{{ section.id }} .cart {
+      width: 100%;
+      justify-content: center;
+      order: 3;
+    }
+
+    #shopify-section-{{ section.id }} .banner-content {
+      flex-direction: column;
+      padding: 20px;
+      gap: 40px;
+      align-items: flex-start;
+      margin-top: 20px;
+    }
+
+    #shopify-section-{{ section.id }} .left-content,
+    #shopify-section-{{ section.id }} .right-content {
+      width: 100%;
+      padding: 0;
+      justify-content: center;
+    }
+
+    #shopify-section-{{ section.id }} .left-content h1,
+    #shopify-section-{{ section.id }} .right-content h1 {
+      font-size: 48px;
+    }
+
+    #shopify-section-{{ section.id }} .action-btn {
+      width: 100%;
+    }
+
+    #shopify-section-{{ section.id }} .slider-arrow {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .slider-controls {
+      display: none;
+    }
+  }
+{% endstyle %}
+
+<div class="container">
+  <div class="banner">
+    <!-- Left side - Fixed image -->
+    <div class="slider-container2">
+      {% if section.settings.left_image %}
+        {{ section.settings.left_image | image_url: width: 1400 | image_tag: loading: 'eager', alt: section.settings.left_image.alt }}
+      {% else %}
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      {% endif %}
+    </div>
+
+    <!-- Right side - Slider Container -->
+    <div class="slider-container" id="Slider-{{ section.id }}">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          {% if block.settings.image %}
+            {{ block.settings.image | image_url: width: 1400 | image_tag: class: 'slide-img', loading: 'eager' }}
+          {% else %}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'slide-img' }}
+          {% endif %}
+        {% endfor %}
+      {% else %}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'slide-img' }}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'slide-img' }}
+      {% endif %}
+    </div>
+
+
+    <div class="content">
+      <div class="header">
+        <div class="menu">
+          {% for link in section.settings.menu.links %}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+          {% else %}
+              <a href="#">Home</a>
+              <a href="#">Shop</a>
+              <a href="#">Journal</a>
+              <a href="#">About</a>
+          {% endfor %}
+        </div>
+        <div class="logo">
+          {% if section.settings.logo %}
+             {{ section.settings.logo | image_url: width: section.settings.logo_width | image_tag: alt: shop.name }}
+          {% else %}
+             <h2 style="color: white; font-weight: bold; font-size: 24px;">{{ shop.name }}</h2>
+          {% endif %}
+        </div>
+        <div class="cart">
+          <button class="icon-btn" aria-label="Search">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </button>
+          <button class="icon-btn" aria-label="Account">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </button>
+          <button class="icon-btn" aria-label="Cart">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="banner-content">
+        <div class="left-content">
+          {% if section.settings.left_subheading != blank %}
+             <h6>{{ section.settings.left_subheading }}</h6>
+          {% endif %}
+          {% if section.settings.left_heading != blank %}
+             <h1>{{ section.settings.left_heading }}</h1>
+          {% endif %}
+          {% if section.settings.left_btn_text != blank %}
+             <a href="{{ section.settings.left_btn_link }}" class="action-btn">{{ section.settings.left_btn_text }}</a>
+          {% endif %}
+        </div>
+        <div class="right-content">
+          {% if section.settings.right_subheading != blank %}
+              <h6>{{ section.settings.right_subheading }}</h6>
+           {% endif %}
+           {% if section.settings.right_heading != blank %}
+              <h1>{{ section.settings.right_heading }}</h1>
+           {% endif %}
+           {% if section.settings.right_btn_text != blank %}
+              <a href="{{ section.settings.right_btn_link }}" class="action-btn">{{ section.settings.right_btn_text }}</a>
+           {% endif %}
+        </div>
+      </div>
+
+      <!-- Slider Dots -->
+      <div class="slider-controls" id="Dots-{{ section.id }}">
+         {% assign slide_count = section.blocks.size %}
+         {% if slide_count == 0 %} {% assign slide_count = 2 %} {% endif %}
+         {% for i in (1..slide_count) %}
+           <span class="slider-dot" data-index="{{ forloop.index0 }}"></span>
+         {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+      const sectionContainer = document.querySelector('#shopify-section-{{ section.id }}');
+      if (!sectionContainer) return;
+
+      const slides = sectionContainer.querySelectorAll(".slider-container img, .slider-container svg"); // Handle both img and svg placeholders
+      const dots = sectionContainer.querySelectorAll(".slider-dot");
+      const prevBtn = sectionContainer.querySelector(".slider-arrow.prev");
+      const nextBtn = sectionContainer.querySelector(".slider-arrow.next");
+      
+      let currentSlide = 0;
+      let slideInterval;
+
+      // Initialize
+      if (slides.length > 0) {
+          slides[0].classList.add('active');
+          if(dots.length > 0) dots[0].classList.add('active');
+          startAutoSlide();
+      }
+
+      function showSlide(index) {
+          // Wrap around logic
+          if (index >= slides.length) index = 0;
+          if (index < 0) index = slides.length - 1;
+          
+          currentSlide = index;
+
+          // Remove active class
+          slides.forEach(slide => slide.classList.remove("active"));
+          dots.forEach(dot => dot.classList.remove("active"));
+
+          // Add active class
+          if(slides[currentSlide]) slides[currentSlide].classList.add("active");
+          if(dots[currentSlide]) dots[currentSlide].classList.add("active");
+      }
+
+      function changeSlide(direction) {
+          showSlide(currentSlide + direction);
+          resetAutoSlide();
+      }
+
+      function goToSlide(index) {
+          showSlide(index);
+          resetAutoSlide();
+      }
+
+      function startAutoSlide() {
+          clearInterval(slideInterval);
+          slideInterval = setInterval(() => {
+              showSlide(currentSlide + 1);
+          }, 3000);
+      }
+
+      function resetAutoSlide() {
+          startAutoSlide();
+      }
+
+      // Event Listeners
+      if(prevBtn) prevBtn.addEventListener('click', () => changeSlide(-1));
+      if(nextBtn) nextBtn.addEventListener('click', () => changeSlide(1));
+      
+      dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => goToSlide(index));
+      });
+  })();
+</script>

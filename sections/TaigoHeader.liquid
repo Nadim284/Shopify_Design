@@ -1,0 +1,136 @@
+<div class="h-[92vh] w-full relative">
+
+  <!-- Banner Image (Parent must be relative) -->
+  <div class="h-full w-full relative overflow-hidden">
+    <img
+      class="w-full h-full object-cover"
+      src="{{ 'taigoB.png' | asset_url }}"
+      alt=""
+    />
+
+    <!-- Header OVER the image -->
+    <div class="h-[14vh] w-full absolute top-0 left-0 z-20 flex">
+
+      <!-- LEFT -->
+      <div class="w-[40%] h-full flex items-end p-6 gap-12 hidden md:flex">
+       <div class="group">
+         <img class="w-[3vh] h-[3vh] cursor-pointer" src="{{ 'menu.png' | asset_url }}" alt="">
+
+         {% comment %} drawer {% endcomment %}
+         <div class="w-[20vw] h-screen bg-white absolute top-0 left-0 z-30 flex flex-col p-8 gap-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out">
+           <div class="w-[1vw] h-[2vh] cursor-pointer">
+            <img class="w-full h-full" src="{{ 'close.png' | asset_url }}" alt="">
+           </div>
+           <h1 class="text-lg font-semibold hover:text-gray-600 cursor-pointer">Home</h1>
+           <h1 class="text-lg font-semibold hover:text-gray-600 cursor-pointer">Shop</h1>
+           <h1 class="text-lg font-semibold hover:text-gray-600 cursor-pointer">About</h1>
+           <h1 class="text-lg font-semibold hover:text-gray-600 cursor-pointer">Contact</h1>
+
+           <div class="w-full flex items-center justify-center my-4">
+            <hr class="w-[80%] border-black opacity-50">
+           </div>
+
+           <div class="h-[2vh] flex items-center justify-between mt-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
+            <div class="flex items-center gap-2">
+              <img class="w-[2vh] h-[2vh] border rounded-full" src="{{ 'usa.png' | asset_url }}" alt="">
+              <h1 class="text-sm">United States: USD $</h1>
+            </div>
+            <img class="w-[2vh] h-[2vh]" src="{{ 'right.png' | asset_url }}" alt="">
+           </div>
+         </div>
+       </div>
+
+        {% for block in section.blocks %}
+          <h1 class="text-xl font-bold text-black">{{ block.settings.title }}</h1>
+        {% endfor %}
+        
+      </div>
+
+      <!-- CENTER LOGO -->
+      <div class="w-[20%] h-full flex items-end justify-center md:items-center">
+        {% if section.settings.logo %}
+          <img
+            class="w-[14vh] h-[14vh] mb-[-2vh]"
+            src="{{ section.settings.logo | image_url: width: 200 }}"
+            alt=""
+          >
+        {% else %}
+          <img
+            class="w-[14vh] h-[14vh] mb-[-2vh]"
+            src="{{ 'Taigologo.png' | asset_url }}"
+            alt=""
+          >
+        {% endif %}
+      </div>
+
+      <!-- RIGHT -->
+      <div class="w-[40%] h-full hidden md:flex items-end justify-end p-6 gap-12">
+        <div class="w-[1.5vw] h-[3vh] border-2 rounded-full">
+          <img src="{{ 'usa.png' | asset_url }}" alt="">
+        </div>
+        <div class="w-[1.2vw] h-[3vh]">
+          <img src="{{ 'search.png' | asset_url }}" alt="">
+        </div>
+        <div class="w-[1.5vw] h-[3vh]">
+          <img src="{{ 'profile.png' | asset_url }}" alt="">
+        </div>
+        <div class="w-[1.5vw] h-[3vh]">
+          <img src="{{ 'shopping-bag.png' | asset_url }}" alt="">
+        </div>
+      </div>
+
+    </div>
+
+      {% comment %} Popup Code  {% endcomment %}
+
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[25vw] h-auto bg-gradient-to-br from-pink-500 to-pink-600 rounded-3xl p-6 shadow-2xl">
+        
+        <!-- Close Button - Top Right -->
+        <div class="absolute top-4 right-4 z-30">
+          <img class="w-[2.5vh] h-[2.5vh] cursor-pointer hover:opacity-70 transition-opacity" src="{{ 'close.png' | asset_url }}" alt="">
+        </div>
+
+        <!-- Popup Image -->
+        <div class="w-full h-[50vh] flex items-center justify-center">
+          <img class="w-full h-full object-contain" src="{{ 'popup.jpg' | asset_url }}" alt="">
+        </div>
+
+        <!-- Browse Products Button - Bottom -->
+        <div class="mt-4">
+          <button class="w-full h-[6vh] bg-white text-pink-600 font-bold text-lg rounded-full hover:bg-gray-100 transition-colors">Browse products</button>
+        </div>
+      </div>
+
+
+  </div>
+
+</div>
+
+
+{% schema %}
+{
+    "name": "TaigoHeader",
+    "settings": [
+            {
+                "type": "image_picker",
+                "id": "logo",
+                "label": "Logo"
+            }
+
+        ],
+        "blocks": [
+            {
+                "type": "menu_item",
+                "name": "Menu Item",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Menu Title",
+                        "default": "Menu"
+                    }
+                ]
+            }
+        ]
+}
+{% endschema %}

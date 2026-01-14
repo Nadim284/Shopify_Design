@@ -1,0 +1,234 @@
+<section
+      class="h-[80vh] w-full flex items-center justify-center relative"
+    >
+      <div
+        class="banner h-[75vh] w-[90%] bg-red-400 rounded-2xl overflow-hidden relative"
+      >
+        {% if section.settings.banner_image == blank %}
+            <img
+          class="h-full w-full object-cover"
+          src="{{ 'banner.png' | asset_url }}"
+          alt="Banner"
+        />
+        {% else %}
+        <img
+          class="h-full w-full object-cover"
+          src="{{ section.settings.banner_image | img_url: 'master' }}"
+          alt="Banner"
+        />
+        {% endif %}
+
+        <div class="absolute top-8 left-8 flex flex-col gap-6 max-w-2xl px-4">
+          <!-- Timer pill -->
+          <div
+            class="inline-flex items-center bg-black/80 backdrop-blur-md px-4 py-1.5 rounded-full gap-2 border border-white/5 self-start shadow-xl"
+          >
+            <img
+              class="h-3.5 w-3.5 object-contain opacity-90"
+              src="{{ 'stopwatch2.png' | asset_url }}"
+              alt="Stopwatch"
+            />
+            <h1 class="text-white text-xs font-medium tracking-tight">
+              <span id="days" class="font-bold">02</span>
+              <span class="opacity-60">d :</span>
+              <span id="hours" class="font-bold">02</span>
+              <span class="opacity-60">h :</span>
+              <span id="minutes" class="font-bold">58</span>
+              <span class="opacity-60">m :</span>
+              <span id="seconds" class="font-bold">53</span>
+              <span class="opacity-60 text-[10px]">s</span>
+            </h1>
+          </div>
+
+          <!-- Headings -->
+          <div class="space-y-4">
+            <h1
+  class="text-white text-5xl lg:text-6xl font-black"
+  style="color: {{ section.settings.text_color }}; font-size: {{ section.settings.font_size_main_title }}px;"
+>
+  {{ section.settings.main_title }}
+</h1>
+
+            <p class="text-gray-300 text-lg font-medium opacity-90 max-w-md"
+            style="color: {{ section.settings.text_color }}; font-size: {{ section.settings.font_size_sub_title }}px;">
+              {{ section.settings.sub_title }} <br />
+              during our flash sale.
+            </p>
+          </div>
+        </div>
+
+        <button
+          class="shop-now absolute bottom-12 left-12 bg-[#FFD700] hover:bg-[#FFC700] text-black px-10 py-3.5 rounded-xl font-black text-lg shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all hover:translate-y-[-2px] active:translate-y-[0] z-10 uppercase tracking-wide"
+        style="background-color: {{ section.settings.button_color }}; color: {{ section.settings.button_text_color }};"
+          >
+          {{ section.settings.button_text }}
+        </button>
+
+
+        <div
+          class="h-10 w-10 bg-white absolute top-1/2 right-6 -translate-y-1/2 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors shadow-xl z-20"
+        >
+          <img class="h-3 w-3" src="{{ 'right.png' | asset_url }}" alt="right" width="12" height="12" />
+        </div>
+
+        <!-- Badge -->
+        <div
+          class="h-36 w-36  bg-white absolute top-16 right-[15%] rounded-full flex items-center justify-center z-10"
+        >
+          <div
+            class="h-32 w-32 bg-[#FFD700] rounded-full flex flex-col items-center justify-center relative shadow-[0_10px_40px_rgba(0,0,0,0.2)]"
+          >
+            <p class="text-[12px] font-bold text-black/70 mb-1">Save Up to</p>
+            <div class="flex items-start">
+              <h1 class="text-6xl font-black text-black leading-none">{{ section.settings.percentage }}</h1>
+              <span class="text-2xl font-black text-black mt-1 ml-0.5">%</span>
+            </div>
+            <!-- Peel/White cut -->
+            <div
+              class="absolute -bottom-1 -right-0 w-10 h-10 bg-white rounded-full translate-x-1/4 translate-y-1/4"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <script>
+      function updateTimer() {
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + {{ section.settings.discount_day }});
+
+        function tick() {
+          const now = new Date().getTime();
+          const distance = targetDate - now;
+
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor(
+            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          const minutes = Math.floor(
+            (distance % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          document.getElementById("days").innerText = days
+            .toString()
+            .padStart(2, "0");
+          document.getElementById("hours").innerText = hours
+            .toString()
+            .padStart(2, "0");
+          document.getElementById("minutes").innerText = minutes
+            .toString()
+            .padStart(2, "0");
+          document.getElementById("seconds").innerText = seconds
+            .toString()
+            .padStart(2, "0");
+
+          if (distance < 0) {
+            clearInterval(timerInterval);
+            document.getElementById("days").parentElement.innerText = "EXPIRED";
+          }
+        }
+
+        tick();
+        const timerInterval = setInterval(tick, 1000);
+      }
+
+      updateTimer();
+    </script>
+
+
+{% schema %}
+{
+    "name": "Mix Banner",
+    "settings": [
+
+            {
+                "type": "image_picker",
+                "id": "banner_image",
+                "label": "Banner Image"
+            },
+            {
+                "type": "text",
+                "id": "sub_title",
+                "label": "Sub Title"
+            },
+            {
+                "type": "text",
+                "id": "main_title",
+                "label": "Main Title",
+                "default": "Electronics Sale Live Now – 24 Hours to Save"
+            },
+            {
+                "type": "textarea",
+                "id": "description",
+                "label": "Description",
+                "default": "Your next gadget is waiting – up to 60% off <br /> during our flash sale."
+            },
+            {
+                "type": "text",
+                "id": "button_text",
+                "label": "Button Text",
+                "default": "Shop Now"
+            },
+             {
+                "type": "color",
+                "id": "text_color",
+                "label": "Text Color" 
+            },
+            {
+                "type": "color",
+                "id": "button_color",
+                "label": "Button Color" 
+            },
+           
+            {
+                "type": "color",
+                "id": "button_text_color",
+                "label": "Button Text Color" 
+            },
+            {
+                "type": "range",
+                "id": "font_size_main_title",
+                "label": "Font Size Main Title",
+                "min": 10,
+                "max": 100,
+                "step": 1,
+                "default": 16,
+                "unit": "px"
+            },
+            {
+                "type": "range",
+                "id": "font_size_sub_title",
+                "label": "Font Size Sub Title",
+                "min": 10,
+                "max": 100,
+                "step": 1,
+                "default": 16,
+                "unit": "px"
+            },
+            {
+                "type": "range",
+                "id": "percentage",
+                "label": "Percentage",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "default": 40
+            },
+            {
+                "type": "number",
+                "id": "discount_day",
+                "label": "Discount Day",
+                "default": 3
+            }
+        
+        ],
+        "presets": [
+            {
+                "name": "Mix Banner",
+                "category": "Banner"
+            }
+        ]
+}
+{% endschema %}

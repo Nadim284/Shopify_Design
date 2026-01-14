@@ -1,0 +1,81 @@
+<div class="h-[4vh] w-full flex items-center justify-center ">
+  <div class="h-[4vh] w-[90%] flex items-center gap-2">
+    {% for block in section.blocks %}
+    <div
+      class="h-[4vh] w-[8%] flex items-center justify-start gap-2 p-2"
+    >
+    {% if block.settings.icon %}
+        <img
+          class="h-[1.5vh]"
+          src="{{ block.settings.icon | image_url: width: 50 }}"
+          alt="icon"
+        />
+      {% endif %}
+      <h1 class="text-sm font-bold text-gray-800">
+        {{ block.settings.title }}
+      </h1>
+
+      {% if block.settings.has_dropdown %}
+        <img
+          class="h-[1.5vh]"
+          src="{{ 'down-arrow.png' | asset_url }}"
+          alt="down"
+        />
+      {% endif %}
+
+      {% if block.settings.icon2 %}
+        <img
+          class="h-[1.5vh]"
+          src="{{ block.settings.icon2 | image_url: width: 50 }}"
+          alt="icon"
+        />
+      {% endif %}
+
+      
+    </div>
+  {% endfor %}
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "Nav Bar",
+  "blocks": [
+    {
+      "type": "menu_item",
+      "name": "Menu Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Menu Title",
+          "default": "Menu"
+        },
+        {
+          "type": "checkbox",
+          "id": "has_dropdown",
+          "label": "Show Dropdown Arrow",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Menu Icon (optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon2",
+          "label": "Menu Icon (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Nav Bar"
+    }
+  ]
+}
+{% endschema %}
